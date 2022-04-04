@@ -13,9 +13,20 @@ const app = express();
 // 익스프레스 어플리케이션을 만든 이 코드 미트로 코드가 작성되야함
 // 그리고 app.listen(외부에 개방) 위에 코드 작성, 샌드위치 처럼 가운데에 작성
 
-app.get("/", (req, res) => {
-    return res.send("I love you 가현");
-});
+const handleHome = (req, res) => {
+    return res.send("I love middlewares");
+};
+// finalMiddleware(=controller) 이기 때문에 next()를 사용하지 않고
+// 따라서 argument 에 next 인자가 필요하진 않음
+
+const gossipMiddleware = (req, res, next) => {
+    console.log(`Someone is going to: ${req.url}`);
+    next();
+}
+// 해당 Middleware의 next(); 코드 전에 return 코드가 있으면 next(); 는 실행 되지 않음
+// 일반적으로 middleware는 위와 같이 유저가 어디로 가고싶어 하는지 알려주는데 사용
+
+app.get("/", gossipMiddleware, handleHome);
 // button.addEventListener("click", handleClick); 동작과 비슷
 // 누군가가 어떤 route로, 이 경우엔 home으로 get request를 보낸다면,
 // 반응하는 callback을 추가
@@ -29,6 +40,8 @@ app.get("/", (req, res) => {
 // return response.end() : response Object 의 함수, 끝내버린다 ㄷㄷ, 종료
 // return response.send("I still love you") : I stll love you 웹페이지에 띄움
 // user request to server -> server response to user : 상호작용하는 방법, 서버와 유저간의
+// user 와 server 사이에서 항상 브라우저가 대행한다
+// app.get() function은 url이 필요하고 여러개의 handler를 쓸 수 있다
 
 const handleLogin = (req, res) => {
     return res.send("login here.");
