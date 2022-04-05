@@ -1,5 +1,6 @@
 import express from "express";
 //const express = require("express");
+import morgan from "morgan";
 
 const PORT = 4000;
 
@@ -12,6 +13,7 @@ const app = express();
 // Server is waiting for you
 // 익스프레스 어플리케이션을 만든 이 코드 미트로 코드가 작성되야함
 // 그리고 app.listen(외부에 개방) 위에 코드 작성, 샌드위치 처럼 가운데에 작성
+const logger = morgan("dev");
 
 const handleHome = (req, res) => {
     return res.send("I love middlewares");
@@ -19,14 +21,36 @@ const handleHome = (req, res) => {
 // finalMiddleware(=controller) 이기 때문에 next()를 사용하지 않고
 // 따라서 argument 에 next 인자가 필요하진 않음
 
-const gossipMiddleware = (req, res, next) => {
-    console.log(`Someone is going to: ${req.url}`);
+const handleLogin = (req, res) => { 
+    return res.send("login here.");
+};
+
+/* const logger = (req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
     next();
-}
+}; */
 // 해당 Middleware의 next(); 코드 전에 return 코드가 있으면 next(); 는 실행 되지 않음
 // 일반적으로 middleware는 위와 같이 유저가 어디로 가고싶어 하는지 알려주는데 사용
 
-app.get("/", gossipMiddleware, handleHome);
+/* const privateMiddleware = (req,res,next) => {
+    const url = req.url;
+    if(url === "/protected") {
+        return res.send("<h1>Not Allowed</h1>");
+    }
+    console.log("Allowed, you may continue.");
+    next();
+}; 
+
+const handleProtected = (req, res) => {
+    return res.send("Welcome to the private lounge.")
+}; */
+
+/* app.use(logger); // global middleware, 순서를 조심해야 한다, 모든 route 에 사용됌 */
+/* app.use(privateMiddleware); */
+
+app.use(logger);
+app.get("/", handleHome);
+/* app.get("/protected", handleProtected); // 해당 controller는 위의 middleware의 return 동작으로인해 사용되지 않음 */
 // button.addEventListener("click", handleClick); 동작과 비슷
 // 누군가가 어떤 route로, 이 경우엔 home으로 get request를 보낸다면,
 // 반응하는 callback을 추가
@@ -42,11 +66,6 @@ app.get("/", gossipMiddleware, handleHome);
 // user request to server -> server response to user : 상호작용하는 방법, 서버와 유저간의
 // user 와 server 사이에서 항상 브라우저가 대행한다
 // app.get() function은 url이 필요하고 여러개의 handler를 쓸 수 있다
-
-const handleLogin = (req, res) => {
-    return res.send("login here.");
-}
-
 app.get("/login", handleLogin);
 
 const handleListening = () => console.log(`✅ Server listening on port http://localhost:${PORT} 🚀`);
@@ -57,3 +76,6 @@ app.listen(PORT, handleListening);
 // port는 컴퓨터의 문이나 창문과 같은 것
 // 클릭이벤트 바닐라 JS 와 비슷
 // localhost:4000 으로 방금 만든 서버에 접속 가능
+
+
+
