@@ -15,15 +15,54 @@ const app = express();
 // 그리고 app.listen(외부에 개방) 위에 코드 작성, 샌드위치 처럼 가운데에 작성
 const logger = morgan("dev");
 
-const handleHome = (req, res) => {
+app.use(logger);
+/* app.get("/", handleHome); */
+/* app.get("/protected", handleProtected); // 해당 controller는 위의 middleware의 return 동작으로인해 사용되지 않음 */
+// button.addEventListener("click", handleClick); 동작과 비슷
+// 누군가가 어떤 route로, 이 경우엔 home으로 get request를 보낸다면,
+// 반응하는 callback을 추가
+// 브라우저가 / url 의 페이지를 request 중
+// route handler 는 두개의 sexy 한 object 가 있다
+// (request, response) 이다
+// 어떤 이름을 써도 되지만 꼭 두개 여야한다. request and response
+// request, response 는 express 에게 받은 것이다
+// request, response object 를 console.log() 해서 확인해보면
+// 엄청 긴 Object가 나온다. 앞으로 우리는 이것들에 익숙해질 것이다
+// return response.end() : response Object 의 함수, 끝내버린다 ㄷㄷ, 종료
+// return response.send("I still love you") : I stll love you 웹페이지에 띄움
+// user request to server -> server response to user : 상호작용하는 방법, 서버와 유저간의
+// user 와 server 사이에서 항상 브라우저가 대행한다
+// app.get() function은 url이 필요하고 여러개의 handler를 쓸 수 있다
+/* app.get("/login", handleLogin); */
+
+const globalRouter = express.Router();
+
+const handleHome = (req, res) => res.send("Home");
+globalRouter.get("/", handleHome);
+
+const userRouter = express.Router();
+
+const handleEditUser = (req, res) => res.send("Edit User");
+userRouter.get("/edit", handleEditUser);
+
+const videoRouter = express.Router();
+
+const handleWatchVideo = (req, res) => res.send("Watch Video");
+videoRouter.get("/watch", handleWatchVideo);
+
+app.use("/videos", videoRouter);
+app.use("/users", userRouter);
+app.use("/", globalRouter);
+
+/* const handleHome = (req, res) => {
     return res.send("I love middlewares");
-};
+}; */
 // finalMiddleware(=controller) 이기 때문에 next()를 사용하지 않고
 // 따라서 argument 에 next 인자가 필요하진 않음
 
-const handleLogin = (req, res) => { 
+/*const handleLogin = (req, res) => { 
     return res.send("login here.");
-};
+};*/
 
 /* const logger = (req, res, next) => {
     console.log(`${req.method} ${req.url}`);
@@ -48,25 +87,6 @@ const handleProtected = (req, res) => {
 /* app.use(logger); // global middleware, 순서를 조심해야 한다, 모든 route 에 사용됌 */
 /* app.use(privateMiddleware); */
 
-app.use(logger);
-app.get("/", handleHome);
-/* app.get("/protected", handleProtected); // 해당 controller는 위의 middleware의 return 동작으로인해 사용되지 않음 */
-// button.addEventListener("click", handleClick); 동작과 비슷
-// 누군가가 어떤 route로, 이 경우엔 home으로 get request를 보낸다면,
-// 반응하는 callback을 추가
-// 브라우저가 / url 의 페이지를 request 중
-// route handler 는 두개의 sexy 한 object 가 있다
-// (request, response) 이다
-// 어떤 이름을 써도 되지만 꼭 두개 여야한다. request and response
-// request, response 는 express 에게 받은 것이다
-// request, response object 를 console.log() 해서 확인해보면
-// 엄청 긴 Object가 나온다. 앞으로 우리는 이것들에 익숙해질 것이다
-// return response.end() : response Object 의 함수, 끝내버린다 ㄷㄷ, 종료
-// return response.send("I still love you") : I stll love you 웹페이지에 띄움
-// user request to server -> server response to user : 상호작용하는 방법, 서버와 유저간의
-// user 와 server 사이에서 항상 브라우저가 대행한다
-// app.get() function은 url이 필요하고 여러개의 handler를 쓸 수 있다
-app.get("/login", handleLogin);
 
 const handleListening = () => console.log(`✅ Server listening on port http://localhost:${PORT} 🚀`);
 
