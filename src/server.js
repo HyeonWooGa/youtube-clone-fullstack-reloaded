@@ -18,6 +18,7 @@ const app = express();
 // 그리고 app.listen(외부에 개방) 위에 코드 작성, 샌드위치 처럼 가운데에 작성
 const logger = morgan("dev");
 
+app.set("view engine", "pug");
 app.use(logger);
 /* app.get("/", handleHome); */
 /* app.get("/protected", handleProtected); // 해당 controller는 위의 middleware의 return 동작으로인해 사용되지 않음 */
