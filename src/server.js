@@ -19,6 +19,7 @@ const app = express();
 const logger = morgan("dev");
 
 app.set("view engine", "pug");
+app.set("views", process.cwd() + "/src/views");
 app.use(logger);
 /* app.get("/", handleHome); */
 /* app.get("/protected", handleProtected); // 해당 controller는 위의 middleware의 return 동작으로인해 사용되지 않음 */
