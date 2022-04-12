@@ -40,7 +40,7 @@ app.use(logger);
 // app.get() function은 url이 필요하고 여러개의 handler를 쓸 수 있다
 /* app.get("/login", handleLogin); */
 
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}));
 
 app.use("/", globalRouter);
 app.use("/users", userRouter);
