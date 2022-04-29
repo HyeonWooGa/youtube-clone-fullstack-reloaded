@@ -1,6 +1,7 @@
 import express from "express";
 //const express = require("express");
 import morgan from "morgan";
+import session from "express-session";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -39,6 +40,25 @@ app.use(logger);
 /* app.get("/login", handleLogin); */
 
 app.use(express.urlencoded({extended: true}));
+
+// 라우터 앞에 세션 미들웨어 초기화 해줌
+app.use(session({
+    secret: "Hello!",
+    resave: true,
+    saveUninitialized: true,
+}))
+
+app.use((req, res, next) => {
+    req.sessionStore.all((error, sessions) => {
+        console.log(sessions);
+        next();
+    });
+});
+
+app.get("/add-one", (req, res, next) => {
+    req.session.potato += 1;
+    return res.send(`${req.session.id}\n${req.session.potato}`);
+});
 
 app.use("/", rootRouter);
 app.use("/users", userRouter);
