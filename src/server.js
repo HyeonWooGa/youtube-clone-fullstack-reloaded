@@ -5,6 +5,7 @@ import session from "express-session";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
+import { localsMiddleware } from "./middlewares";
 
 const app = express();
 //express app 생성 ,server
@@ -48,17 +49,21 @@ app.use(session({
     saveUninitialized: true,
 }))
 
+/* 공부용, 모든 접근자를 매번 콘솔에서 확인할 필요 절대 없음
 app.use((req, res, next) => {
     req.sessionStore.all((error, sessions) => {
         console.log(sessions);
         next();
     });
 });
+*/
 
-app.get("/add-one", (req, res, next) => {
+/* app.get("/add-one", (req, res, next) => {
     req.session.potato += 1;
     return res.send(`${req.session.id}\n${req.session.potato}`);
-});
+}); */
+
+app.use(localsMiddleware);
 
 app.use("/", rootRouter);
 app.use("/users", userRouter);
