@@ -46,8 +46,8 @@ app.use(express.urlencoded({extended: true}));
 // 라우터 앞에 세션 미들웨어 초기화 해줌
 app.use(session({
     secret: "Hello!",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" }),
     })
 );
