@@ -1,3 +1,5 @@
+import multer from "multer";
+
 export const localsMiddleware = (req, res, next) => {
     res.locals.loggedIn = Boolean(req.session.loggedIn); // req.session.loggedIn 이 null, undefined 일 수 있으니 Boolean 으로 감싸줌
     res.locals.siteName = "Wetube";
@@ -21,3 +23,5 @@ export const publicOnlyMiddleware = (req, res, next) => {
         return res.render("/");
     }
 };
+
+export const uploadFiles = multer({ dest : "uploads/" });

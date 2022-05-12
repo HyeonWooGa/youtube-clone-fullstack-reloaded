@@ -140,7 +140,8 @@ export const getEdit = (req, res) => {
 };
 
 export const postEdit = async (req, res) => {
-    const { session: {user : {_id}}, body: { name, email, username, location} } = req; // ES6 const id = req.session.user.id & const { name, email, username, location } = req.body;
+    const { session: {user : {_id}}, body: { name, email, username, location}, file } = req; // ES6 const id = req.session.user.id & const { name, email, username, location } = req.body;
+    console.log(file);
     const updateUser = await User.findByIdAndUpdate(_id, {
         name, email, username, location,
     },
@@ -155,7 +156,7 @@ export const getChangePassword = (req, res) => {
 };
 
 export const postChangePassword = async (req, res) => {
-    const { session: {user : { _id }}, body: { oldPassword, newPassword, newPasswordConfirmation} } = req;
+    const { session: {user : { _id }}, body: { oldPassword, newPassword, newPasswordConfirmation}, } = req;
     const user = await User.findById(_id);
     const ok = await bcrypt.compare(oldPassword, user.password);
     if(!ok) {
