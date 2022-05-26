@@ -23,6 +23,8 @@ const handleDownload = () => {
     recordBtn.innerText = "Recording";
     recordBtn.className = recordBtn;
     recordBox.appendChild(recordBtn);
+
+    recordBtn.addEventListener("click", initRecording);
 };
 
 const handleStop = () => {
