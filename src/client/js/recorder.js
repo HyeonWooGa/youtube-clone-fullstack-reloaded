@@ -3,10 +3,15 @@ const video = document.getElementById("preview");
 
 let stream;
 let recorder;
+let videoFile;
 
 const handleDownload = () => {
-
-}
+    const a = document.createElement("a");
+    a.href = videoFile;
+    a.download = "MyRecroding.webm";
+    document.body.appendChild(a);
+    a.click();
+};
 
 const handleStop = () => {
     startBtn.innerText = "Download Recording";
@@ -23,7 +28,7 @@ const handleStart = () => {
     console.log(recorder);
     recorder.ondataavailable = (event) => {
         console.log(event.data);
-        const videoFile = URL.createObjectURL(event.data);
+        videoFile = URL.createObjectURL(event.data);
         video.srcObject = null;
         video.src = videoFile;
         video.loop = true;
