@@ -110,8 +110,6 @@ const handlePlaySpacebar = (event) => {
     if(key === ' ') {
         event.preventDefault();
         handlePlayClick();
-    } else if (key === 'f') {
-        handleFullScreen();
     }
 };
 
