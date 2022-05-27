@@ -2,6 +2,7 @@ import express from "express";
 //const express = require("express");
 import morgan from "morgan";
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
@@ -68,6 +69,7 @@ app.use((req, res, next) => {
 }); */
 
 app.use(localsMiddleware);
+app.use(flash());
 
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("assets"));
