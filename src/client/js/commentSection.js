@@ -6,14 +6,35 @@ const handleSubmit = (event) => {
     const textarea = form.querySelector("textarea");
     const text = textarea.value;
     const videoId = videoContainer.dataset.id;
+    if (text === "") return;
     fetch(`/api/videos/${videoId}/comment`, {
-        method: "POST", 
-        body: {
-            text,
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
         },
+        body: JSON.stringify({ text }),
     });
+};
+
+const handleEnter = (event) => {
+    const { key } = event;
+    if (key === 'Enter') {
+        event.preventDefault();
+        const textarea = form.querySelector("textarea");
+        const text = textarea.value;
+        const videoId = videoContainer.dataset.id;
+        if (text === "") return;
+        fetch(`/api/videos/${videoId}/comment`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ text }),
+        });
+    }
 };
 
 if(form) {
     form.addEventListener("submit", handleSubmit);
+    window.addEventListener("keydown", handleEnter);
 }

@@ -44,6 +44,7 @@ app.use(logger);
 /* app.get("/login", handleLogin); */
 
 app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 // 라우터 앞에 세션 미들웨어 초기화 해줌
 app.use(session({
