@@ -14,6 +14,7 @@ const handleSubmit = (event) => {
         },
         body: JSON.stringify({ text }),
     });
+    textarea.value = "";
 };
 
 const handleEnter = (event) => {
@@ -31,6 +32,7 @@ const handleEnter = (event) => {
             },
             body: JSON.stringify({ text }),
         });
+        textarea.value = "";
     }
 };
 
