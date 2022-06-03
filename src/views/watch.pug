@@ -30,8 +30,9 @@ block content
             each comment in video.comments.reverse()
                 li.video__comment(data-id=comment.id)
                     i.fas.fa-comment
-                    span  #{comment.text}
-                    span  ❌
+                    span  #{comment.text} 
+                    if String(loggedInUser._id) === String(comment.owner._id)
+                        button#delete__comment  ❌
 //-    div
         p=video.description
         small=video.createdAt
