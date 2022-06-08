@@ -1,3 +1,4 @@
+import "regenerator-runtime";
 import "dotenv/config";
 import "./db";
 import "./models/Video";
@@ -7,7 +8,8 @@ import app from "./server";
 
 const PORT = 4000;
 
-const handleListening = () => console.log(`✅ Server listening on port http://localhost:${PORT} 🚀`);
+const handleListening = () =>
+  console.log(`✅ Server listening on port http://localhost:${PORT} 🚀`);
 
 app.listen(PORT, handleListening);
 // Callback = 서버가 시작될 때 작동하는 함수
