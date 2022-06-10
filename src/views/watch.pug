@@ -33,7 +33,7 @@ block content
                     span  #{comment.text} 
                     if String(loggedInUser._id) === String(comment.owner._id)
                         button#delete__comment  ❌
-//-    div
+    div
         p=video.description
         small=video.createdAt
     div
