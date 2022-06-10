@@ -59,7 +59,6 @@ const formatTime = (seconds) =>
 const handleLoadedMetadata = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
   timeline.max = Math.floor(video.duration);
-  handleLoadedMetadata();
 };
 
 const handleTimeUpdate = () => {
@@ -143,3 +142,7 @@ videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 video.addEventListener("click", handleVideoClick);
 window.addEventListener("keydown", handlePlaySpacebar);
+
+if (video.readyState === 4) {
+  handleLoadedMetadata();
+}
