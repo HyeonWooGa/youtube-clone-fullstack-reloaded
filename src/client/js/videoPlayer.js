@@ -133,7 +133,8 @@ const handleEnded = () => {
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumnChange);
-video.addEventListener("canplay", handleLoadedMetadata);
+video.addEventListener("loadedmetadata", handleLoadedMetadata);
+if (video) handleLoadedMetadata();
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("ended", handleEnded);
 timeline.addEventListener("input", handleTimelineChange);
