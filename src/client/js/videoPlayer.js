@@ -143,6 +143,6 @@ videoContainer.addEventListener("mouseleave", handleMouseLeave);
 video.addEventListener("click", handleVideoClick);
 window.addEventListener("keydown", handlePlaySpacebar);
 
-if (video.readyState === 4) {
+if (video.readyState == 4) {
   handleLoadedMetadata();
 }
