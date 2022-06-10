@@ -154,7 +154,9 @@ export const deleteComment = async (req, res) => {
     params: { commentId },
   } = req;
 
-  const comment = await Comment.findById(commentId).populate("owner");
+  const comment = await Comment.findById(commentId)
+    .populate("owner")
+    .populate("video");
   const videoId = comment.video;
   if (String(_id) !== String(comment.owner._id)) {
     return res.sendStatus(404);
