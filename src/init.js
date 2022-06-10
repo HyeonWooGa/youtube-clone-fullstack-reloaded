@@ -19,3 +19,4 @@ app.listen(PORT, handleListening);
 // localhost:4000 으로 방금 만든 서버에 접속 가능
 
 // 배포 어렵다... 근데 계속 오류나고 수정하면서 많이 배운다...
+// AWS S3
